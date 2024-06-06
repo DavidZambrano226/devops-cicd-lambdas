@@ -30,4 +30,4 @@ phases:
       - ls -l
       - echo Updating Lambda function configuration to AWS...
       - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
-      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://index-hello-world.zip --publish --output json
+      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
