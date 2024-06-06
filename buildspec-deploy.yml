@@ -29,15 +29,26 @@ phases:
       - cd ./$FUNCTION_NAME/dist
       - ls -l
       - echo Updating Lambda function configuration to AWS...
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler 
-      - while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
+      - |
+        while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
           aws lambda get-function-configuration --function-name $FUNCTION_NAME
           if [ $? -eq 0 ]; then
             echo "Deploying Lambda function to AWS..."
-            aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region us-east-1
-            break
+            aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region $AWS_REGION
+            if [ $? -eq 0 ]; then
+              echo "Deployment succeeded."
+              break
+            else
+              echo "Update function code failed. Retrying..."
+            fi
           else
             echo "Update function configuration failed. Retrying..."
-            RETRY_COUNT=$((RETRY_COUNT + 1))
           fi
+          RETRY_COUNT=$((RETRY_COUNT + 1))
+          sleep 5
         done
+      - if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+          echo "Deployment failed after $MAX_RETRIES attempts."
+          exit 1
+        fi
