@@ -21,6 +21,7 @@ phases:
       - echo Building...
       - npm run build
       - ls -l
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
   post_build:
     commands:
       - MAX_RETRIES=3
@@ -29,5 +30,4 @@ phases:
       - cd ./$FUNCTION_NAME/dist
       - ls -l
       - echo Updating Lambda function configuration to AWS...
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
