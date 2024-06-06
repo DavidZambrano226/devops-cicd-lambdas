@@ -27,5 +27,4 @@ phases:
       - cd ./$FUNCTION_NAME/dist
       - ls -l
       - echo Deploying Lambda function to AWS...
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler && 
-        \ aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region us-east-1
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler && aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region us-east-1
