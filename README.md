@@ -1,5 +1,3 @@
 # AWS Lambda project with CI/CD strategy
 
-- First adding lambda
-- Second test
-- final and go to sleep
+This is a backend project that integrate the CI/CD Strategy to automate the build and deploy phases from service with AWS Lambda.
