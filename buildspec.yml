@@ -23,6 +23,6 @@ phases:
       - ls -l
   post_build:
     commands:
-      - echo Getting package function
-      - cd $FUNCTION_NAME/dist
+      - echo Getting package function ${FUNCTION_NAME}
+      - cd ./hello-lambdas/dist
       - ls -l
