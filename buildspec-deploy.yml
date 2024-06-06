@@ -33,7 +33,7 @@ phases:
       - while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
           aws lambda get-function-configuration --function-name $FUNCTION_NAME
           if [ $? -eq 0 ]; then
-            echo Deploying Lambda function to AWS...
+            echo "Deploying Lambda function to AWS..."
             aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region us-east-1
             break
           else
