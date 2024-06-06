@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    FUNCTION_NAME: "create-client-lambda"
+    FUNCTION_NAME: "hello-lambdas"
     AWS_REGION: "us-east-1"
 
 phases:
@@ -20,4 +20,9 @@ phases:
     commands:
       - echo Building...
       - npm run build
+      - ls -l
+  post_build:
+    commands:
+      - echo Getting package function
+      - cd $FUNCTION_NAME/dist
       - ls -l
