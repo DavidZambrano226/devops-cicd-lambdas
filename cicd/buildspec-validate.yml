@@ -1,0 +1,26 @@
+version: 0.2
+
+env:
+  variables:
+    FUNCTION_NAME: "hello-lambdas"
+    AWS_REGION: "us-east-1"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing NPM dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo Testing...
+      - npm run test
+  build:
+    commands:
+      - echo Building...
+      - npm run build
+      - ls -l
+  post_build:
+    commands:
+      - echo Build of lambda $FUNCTION_NAME is complete.

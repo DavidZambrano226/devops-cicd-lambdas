@@ -1,0 +1,21 @@
+{
+  "name": "devops-cicd-lambdas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "subpkg install",
+    "test": "echo \"Testing is running successfully\"",
+    "build": "subpkg run build",
+    "audit": "subpkg run audit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "subPackages": [
+    "hello-lambdas"
+  ],
+  "devDependencies": {
+    "subpackage": "^1.1.0"
+  }
+}

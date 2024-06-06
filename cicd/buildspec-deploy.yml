@@ -1,0 +1,31 @@
+version: 0.2
+
+env:
+  variables:
+    FUNCTION_NAME: "hello-lambdas"
+    AWS_REGION: "us-east-1"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing NPM dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo Testing...
+      - npm run test
+  build:
+    commands:
+      - echo Building...
+      - npm run build
+      - ls -l
+  post_build:
+    commands:
+      - echo $FUNCTION_NAME
+      - cd ./$FUNCTION_NAME/dist
+      - ls -l
+      - echo Deploying Lambda function to AWS...
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
+      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --region us-east-1
