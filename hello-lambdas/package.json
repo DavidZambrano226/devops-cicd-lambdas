@@ -1,0 +1,23 @@
+{
+    "name": "hello-lambdas",
+    "version": "1.5.2",
+    "main": "src/index-hello-world.js",
+    "files": [
+        "/src"
+    ],
+    "scripts": {
+        "test": "echo Error: no test specified && exit 1",
+        "prebuild": "rm -rf dist",
+        "audit": "npm audit",
+        "build": "repack-zip",
+        "lint:fix": "eslint --fix .",
+        "lint": "eslint .",
+        "prettier:list": "prettier --list-different \"./{test,src}/**/*.js\" || ECHO .",
+        "prettier:write": "prettier --write  \"./{test,src}/**/*.js\"",
+        "prettier": "prettier --check  \"./{test,src}/**/*.js\"",
+        "postbuild": "mkdir dist; mv hello-lambdas.zip dist/"
+    },
+    "devDependencies": {
+        "repack-zip": "^0.2.8"
+    }
+}
