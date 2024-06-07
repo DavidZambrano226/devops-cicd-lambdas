@@ -5,9 +5,14 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "subpkg install",
-    "test": "echo \"Testing is running successfully\"",
+    "test": "subpkg run install",
     "build": "subpkg run build",
-    "audit": "subpkg run audit"
+    "audit": "subpkg run audit",
+    "lint": "subpkg run lint",
+    "lint:fix": "subpkg run lint:fix",
+    "prettier:list": "subpkg run prettier:list",
+    "prettier:write": "subpkg run prettier:write",
+    "prettier": "subpkg run prettier"
   },
   "keywords": [],
   "author": "",

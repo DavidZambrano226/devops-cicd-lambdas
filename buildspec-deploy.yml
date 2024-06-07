@@ -16,6 +16,10 @@ phases:
     commands:
       - echo Testing...
       - npm run test
+      - echo Validating Code Style...
+      - npm run lint
+      - echo Validating Format...
+      - npm run prettier
   build:
     commands:
       - echo Building...
@@ -26,8 +30,6 @@ phases:
       - aws lambda wait function-updated --function-name $FUNCTION_NAME
   post_build:
     commands:
-      - MAX_RETRIES=3
-      - RETRY_COUNT=0
       - echo $FUNCTION_NAME
       - cd ./$FUNCTION_NAME/dist
       - ls -l
