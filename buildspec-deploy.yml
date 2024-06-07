@@ -25,6 +25,7 @@ phases:
       - echo Getting Open API definition...
       - echo Adding environment variables to Open API definition...
       - ls -l
+      - cat api-docs.json
       - |
         #!/bin/bash
         # Read environment variables
@@ -34,12 +35,9 @@ phases:
 
         # Read the template file
         template_file="api-docs.json"
-        output_file="api-docs.json"
 
         # Replace placeholders with environment variables
-        sed -e "s/{{region}}/${region}/g" \
-            -e "s/{{account_id}}/${account_id}/g" \
-            $template_file > $output_file
+        sed -i '' -e 's/{{region}}/${region}/g' -e 's/{{account_id}}/${account_id}/g' "$template_file"
 
         echo "OpenAPI definition generated successfully."
       - cat api-docs.json
