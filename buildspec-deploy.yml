@@ -24,6 +24,7 @@ phases:
       - npm run prettier
       - echo Getting Open API definition...
       - echo Adding environment variables to Open API definition...
+      - ls -l
       - |
         #!/bin/bash
         # Read environment variables
