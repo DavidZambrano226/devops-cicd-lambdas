@@ -51,5 +51,6 @@ phases:
       - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
       - cd ../..
       - Deploy Lambda in API Gateway...
-      - aws apigateway put-rest-api --rest-api-id $API_GTW_ID --mode merge --body file://api-docs.json
+      - ls -l
+      - aws apigateway put-rest-api --rest-api-id $API_GTW_ID --mode merge --no-fail-on-warnings --body file://api-docs.json
       - aws apigateway create-deployment --rest-api-id $API_GTW_ID --stage-name dev
