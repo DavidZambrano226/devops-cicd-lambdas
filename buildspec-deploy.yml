@@ -24,8 +24,6 @@ phases:
       - npm run prettier
       - echo Getting Open API definition...
       - echo Adding environment variables to Open API definition...
-      - ls -l
-      - cat api-docs.json
       - |
         #!/bin/bash
         # Read the template file
@@ -36,21 +34,22 @@ phases:
 
         echo "OpenAPI definition generated successfully."
       - cat api-docs.json
-  # build:
-  #   commands:
-  #     - echo Building...
-  #     - npm run build
-  #     - echo Updating Lambda function configuration to AWS...
-  #     - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
-  #     - echo Waiting for Lambda function configuration update to complete...
-  #     - aws lambda wait function-updated --function-name $FUNCTION_NAME
-  # post_build:
-  #   commands:
-  #     - echo $FUNCTION_NAME
-  #     - cd ./$FUNCTION_NAME/dist
-  #     - ls -l
-  #     - echo Updating Lambda function configuration to AWS...
-  #     - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
-  #     - Deploy Lambda in API Gateway...
-  #     - echo Getting Open API definition...
-  #     - cat api-docs.json
+  build:
+    commands:
+      - echo Building...
+      - npm run build
+      - echo Updating Lambda function configuration to AWS...
+      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
+      - echo Waiting for Lambda function configuration update to complete...
+      - aws lambda wait function-updated --function-name $FUNCTION_NAME
+  post_build:
+    commands:
+      - echo $FUNCTION_NAME
+      - cd ./$FUNCTION_NAME/dist
+      - ls -l
+      - echo Updating Lambda function configuration to AWS...
+      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
+      - cd ../..
+      - Deploy Lambda in API Gateway...
+      - aws apigateway put-rest-api --rest-api-id $API_GTW_ID --mode merge --body file://api-docs.json
+      - aws apigateway create-deployment --rest-api-id $API_GTW_ID --stage-name dev
