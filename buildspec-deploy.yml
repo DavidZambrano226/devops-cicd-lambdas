@@ -28,16 +28,11 @@ phases:
       - cat api-docs.json
       - |
         #!/bin/bash
-        # Read environment variables
-        region=$AWS_REGION
-        account_id=$ACCOUNT_ID
-        function_name=$FUNCTION_NAME
-
         # Read the template file
         template_file="api-docs.json"
 
         # Replace placeholders with environment variables
-        sed -i '' -e 's/{{region}}/$AWS_REGION/g' -e 's/{{account_id}}/$ACCOUNT_ID/g' "$template_file"
+        sed -i '' -e "s/{{region}}/${AWS_REGION}/g" -e "s/{{account_id}}/${ACCOUNT_ID}/g" "$template_file"
 
         echo "OpenAPI definition generated successfully."
       - cat api-docs.json
