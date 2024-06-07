@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "subpkg install",
-    "test": "subpkg run install",
+    "test": "subpkg run test",
     "build": "subpkg run build",
     "audit": "subpkg run audit",
     "lint": "subpkg run lint",
