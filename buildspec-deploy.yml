@@ -4,6 +4,8 @@ env:
   variables:
     FUNCTION_NAME: "hello-lambdas"
     AWS_REGION: "us-east-1"
+    API_GTW_ID: "7r4dquq6pl"
+    ACCOUNT_ID: "846286757852"
 
 phases:
   install:
@@ -20,18 +22,41 @@ phases:
       - npm run lint
       - echo Validating Format...
       - npm run prettier
-  build:
-    commands:
-      - echo Building...
-      - npm run build
-      - ls -l
-      - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
-      - echo Waiting for Lambda function configuration update to complete...
-      - aws lambda wait function-updated --function-name $FUNCTION_NAME
-  post_build:
-    commands:
-      - echo $FUNCTION_NAME
-      - cd ./$FUNCTION_NAME/dist
-      - ls -l
-      - echo Updating Lambda function configuration to AWS...
-      - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
+      - echo Getting Open API definition...
+      - echo Adding environment variables to Open API definition...
+      - |
+        #!/bin/bash
+        # Read environment variables
+        region=$AWS_REGION
+        account_id=$ACCOUNT_ID
+        function_name=$FUNCTION_NAME
+
+        # Read the template file
+        template_file="api-template.yaml"
+        output_file="api-definition.yaml"
+
+        # Replace placeholders with environment variables
+        sed -e "s/{{region}}/${region}/g" \
+            -e "s/{{account_id}}/${account_id}/g" \
+            $template_file > $output_file
+
+        echo "OpenAPI definition generated successfully."
+      - cat api-docs.json
+  # build:
+  #   commands:
+  #     - echo Building...
+  #     - npm run build
+  #     - echo Updating Lambda function configuration to AWS...
+  #     - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
+  #     - echo Waiting for Lambda function configuration update to complete...
+  #     - aws lambda wait function-updated --function-name $FUNCTION_NAME
+  # post_build:
+  #   commands:
+  #     - echo $FUNCTION_NAME
+  #     - cd ./$FUNCTION_NAME/dist
+  #     - ls -l
+  #     - echo Updating Lambda function configuration to AWS...
+  #     - aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://$FUNCTION_NAME.zip --publish --output json
+  #     - Deploy Lambda in API Gateway...
+  #     - echo Getting Open API definition...
+  #     - cat api-docs.json

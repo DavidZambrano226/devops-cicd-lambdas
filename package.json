@@ -2,7 +2,6 @@
   "name": "devops-cicd-lambdas",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "postinstall": "subpkg install",
     "test": "subpkg run test",

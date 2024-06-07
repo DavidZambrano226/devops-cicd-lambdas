@@ -1,1 +1,42 @@
-{}
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Hello Devops Lambda Function",
+    "description": "Devops API for CICD",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/hello": {
+      "get": {
+        "summary": "Tipically Hello World",
+        "operationId": "getHelloWorld",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "number"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "uri": "arn:aws:apigateway:{{region}}:lambda:path/2015-03-31/functions/arn:aws:lambda:{{region}}:{{account_id}}:function:hello-lambdas/invocations",
+          "httpMethod": "POST",
+          "type": "aws_proxy",
+          "payloadFormatVersion": "2.0"
+        }
+      }
+    }
+  }
+}
