@@ -37,7 +37,7 @@ phases:
         template_file="api-docs.json"
 
         # Replace placeholders with environment variables
-        sed -i '' -e 's/{{region}}/${region}/g' -e 's/{{account_id}}/${account_id}/g' "$template_file"
+        sed -i '' -e 's/{{region}}/$AWS_REGION/g' -e 's/{{account_id}}/$ACCOUNT_ID/g' "$template_file"
 
         echo "OpenAPI definition generated successfully."
       - cat api-docs.json
