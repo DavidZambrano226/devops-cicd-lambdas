@@ -22,6 +22,8 @@ phases:
       - npm run build
       - ls -l
       - aws lambda update-function-configuration --function-name $FUNCTION_NAME --handler src/index-hello-world.handler
+      - echo Waiting for Lambda function configuration update to complete...
+      - aws lambda wait function-updated --function-name $FUNCTION_NAME
   post_build:
     commands:
       - MAX_RETRIES=3
