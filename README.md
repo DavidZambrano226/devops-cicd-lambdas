@@ -20,4 +20,4 @@ The deplouy is automated by AWS Codebuild, this project integrate a `buildspec` 
 
 You are ready to use this project.
 
-Developed by: David
+Developed by: David Zambrano
