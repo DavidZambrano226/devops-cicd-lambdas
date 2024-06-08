@@ -16,11 +16,14 @@ phases:
     commands:
       - echo Testing...
       - npm run test
+      - echo Validating Code Style...
+      - npm run lint
+      - echo Validating Format...
+      - npm run prettier
   build:
     commands:
       - echo Building...
       - npm run build
-      - ls -l
   post_build:
     commands:
       - echo Build of lambda $FUNCTION_NAME is complete.
