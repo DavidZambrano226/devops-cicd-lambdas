@@ -4,7 +4,7 @@ describe("Index Hello Test", () => {
     const response = await indexToTest.handler();
     expect(response).toEqual({
       statusCode: 200,
-      body: '{"message":"Hello World!"}',
+      body: '{"message":"Hello World from Lambda!"}',
     });
   });
 });
