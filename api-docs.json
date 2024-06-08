@@ -38,6 +38,9 @@
             "description": "Unauthorized"
           }
         },
+        "security" : [ {
+          "api_key" : [ ]
+        }],
         "x-amazon-apigateway-integration": {
           "uri": "arn:aws:apigateway:{{region}}:lambda:path/2015-03-31/functions/arn:aws:lambda:{{region}}:{{account_id}}:function:hello-lambdas/invocations",
           "responses": {
@@ -51,6 +54,13 @@
           "type": "aws_proxy"
         }
       }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key" : {
+      "type" : "apiKey",
+      "name" : "x-api-key",
+      "in" : "header"
     }
   },
   "definitions": {},
