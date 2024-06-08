@@ -20,7 +20,7 @@
     }
   ],
   "paths": {
-    "/hello": {
+    "/hello-lambdas": {
       "get": {
         "tags": ["Devops"],
         "parameters": [],
