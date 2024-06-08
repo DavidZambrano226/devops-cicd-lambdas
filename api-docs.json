@@ -1,42 +1,63 @@
 {
-  "openapi": "3.0.1",
+  "swagger": "2.0",
   "info": {
-    "title": "Hello Devops Lambda Function",
-    "description": "Devops API for CICD",
-    "version": "1.0.0"
+    "description": "Api Documentation for Devops lambdas\n",
+    "version": "1.0.0",
+    "title": "AWS_API_GATEWAY_DEVOPS",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
   },
+  "tags": [
+    {
+      "name": "Devops",
+      "description": "Devops hello world lambdas"
+    }
+  ],
   "paths": {
     "/hello": {
       "get": {
-        "summary": "Tipically Hello World",
-        "operationId": "getHelloWorld",
+        "tags": ["Devops"],
+        "parameters": [],
+        "summary": "Hello World",
+        "description": "Get a Hello World",
+        "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "number"
-                    },
-                    "body": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "x-amazon-apigateway-integration": {
           "uri": "arn:aws:apigateway:{{region}}:lambda:path/2015-03-31/functions/arn:aws:lambda:{{region}}:{{account_id}}:function:hello-lambdas/invocations",
+          "responses": {
+            "default": {
+              "statusCode": "200"
+            }
+          },
+          "passthroughBehavior": "when_no_match",
           "httpMethod": "POST",
-          "type": "aws_proxy",
-          "payloadFormatVersion": "2.0"
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws_proxy"
         }
       }
     }
-  }
+  },
+  "definitions": {},
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "host": "virtserver.swaggerhub.com",
+  "schemes": ["https", "http"]
 }
