@@ -18,5 +18,6 @@ This is a backend project that integrate the CI/CD Strategy to automate the buil
 
 The deplouy is automated by AWS Codebuild, this project integrate a `buildspec` files with the definition to run the AWS Codebuild validations and deploy.
 
-
 You are ready to use this project.
+
+Developed by: David
