@@ -19,6 +19,7 @@ phases:
       - npm install
   pre_build:
     commands:
+      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Testing...
       - npm run test
       - echo Validating Code Style...
@@ -49,6 +50,7 @@ phases:
         fi
   build:
     commands:
+      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Building...
       - npm run build
       - echo Updating Lambda function configuration to AWS...
@@ -57,6 +59,7 @@ phases:
       - aws lambda wait function-updated --function-name $FUNCTION_NAME
   post_build:
     commands:
+      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo $FUNCTION_NAME
       - cd ./$FUNCTION_NAME/dist
       - ls -l

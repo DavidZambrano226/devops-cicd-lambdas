@@ -16,6 +16,7 @@ phases:
       - npm install
   pre_build:
     commands:
+      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Testing...
       - npm run test
       - echo Validating Code Style...
@@ -29,6 +30,7 @@ phases:
         echo $status
   build:
     commands:
+      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Building...
       - npm run build
   post_build:
