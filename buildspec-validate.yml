@@ -21,7 +21,7 @@ phases:
       - npm run lint
       - echo Validating Format...
       - npm run prettier
-      - aws cloudformation validate-template --template-body file://$TEMPLATE_FILE
+      - aws cloudformation validate-template --template-body file://$CLOUDFORMATION_FILE
   build:
     commands:
       - echo Building...
