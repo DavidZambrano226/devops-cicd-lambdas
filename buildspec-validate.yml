@@ -5,6 +5,7 @@ env:
     FUNCTION_NAME: "hello-lambdas"
     AWS_REGION: "us-east-1"
     CLOUDFORMATION_FILE: "cloudformation.yml"
+    STACK_NAME: "cicd-lambda-stack"
 
 phases:
   install:
