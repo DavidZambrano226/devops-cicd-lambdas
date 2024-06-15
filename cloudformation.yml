@@ -9,8 +9,6 @@ Resources:
       AttributeDefinitions: 
         - AttributeName: Id
           AttributeType: S
-        - AttributeName: SortKey
-          AttributeType: N
       KeySchema: 
         - AttributeName: Id
           KeyType: HASH
