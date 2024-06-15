@@ -5,6 +5,7 @@ env:
     FUNCTION_NAME: "hello-lambdas"
     AWS_REGION: "us-east-1"
     CLOUDFORMATION_FILE: "cloudformation.yml"
+    STACK_NAME: "cicd-lambda-stack"
 
 phases:
   install:
@@ -22,6 +23,13 @@ phases:
       - echo Validating Format...
       - npm run prettier
       - aws cloudformation validate-template --template-body file://$CLOUDFORMATION_FILE
+      - echo Validating Cloudformation status
+      - status="$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION --query "Stacks[0].StackStatus")"
+      - echo $status
+      - >
+        if [[ $status == *"ROLLBACK_COMPLETE"* ]]; then
+          echo "Cloudformation stack in ROLLBACK_COMPLETE state.";
+        fi
   build:
     commands:
       - echo Building...
