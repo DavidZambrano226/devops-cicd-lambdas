@@ -16,7 +16,6 @@ phases:
       - npm install
   pre_build:
     commands:
-      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Testing...
       - npm run test
       - echo Validating Code Style...
@@ -27,9 +26,12 @@ phases:
       - echo Validating Cloudformation status
       - status="$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION --query "Stacks[0].StackStatus")"
       - echo $status
+      - >
+        if [[ $status == *"ROLLBACK_COMPLETE"* ]]; then
+          echo "Cloudformation stack in ROLLBACK_COMPLETE state.";
+        fi
   build:
     commands:
-      - set -e  # Exit immediately if a command exits with a non-zero status
       - echo Building...
       - npm run build
   post_build:
