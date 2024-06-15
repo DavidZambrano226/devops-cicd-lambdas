@@ -6,6 +6,9 @@ env:
     AWS_REGION: "us-east-1"
     API_GTW_ID: "7r4dquq6pl"
     ACCOUNT_ID: "846286757852"
+    DYNAMO_TABLE_NAME: "cicd-dynamodb-table"
+    CLOUDFORMATION_FILE: "cloudformation.yml"
+    STACK_NAME: "cicd-lambda-stack"
 
 phases:
   install:
@@ -54,3 +57,13 @@ phases:
       - ls -l
       - aws apigateway put-rest-api --rest-api-id $API_GTW_ID --mode merge --no-fail-on-warnings --body fileb://api-docs.json
       - aws apigateway create-deployment --rest-api-id $API_GTW_ID --stage-name dev
+      - >
+        if aws dynamodb describe-table --table-name $DYNAMO_TABLE_NAME --region $AWS_REGION > /dev/null 2>&1; then
+          echo "Table $DYNAMO_TABLE_NAME exists in region $AWS_REGION.";
+        else
+          echo "Table $DYNAMO_TABLE_NAME does not exist in region $AWS_REGION. Creating CloudFormation stack $STACK_NAME.";
+          aws cloudformation create-stack --stack-name $STACK_NAME --template-body fileb://$CLOUDFORMATION_FILE --region $AWS_REGION --capabilities CAPABILITY_NAMED_IAM
+          echo "Waiting for CloudFormation stack $STACK_NAME to be created...";
+          aws cloudformation wait stack-create-complete --stack-name $STACK_NAME --region $AWS_REGION;
+          echo "CloudFormation stack $STACK_NAME created successfully.";
+        fi
