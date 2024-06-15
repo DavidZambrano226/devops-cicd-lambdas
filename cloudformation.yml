@@ -16,6 +16,10 @@ Resources:
           KeyType: HASH
         - AttributeName: SortKey
           KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
       Tags:
         - Key: Environment
           Value: Production
