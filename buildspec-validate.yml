@@ -22,6 +22,10 @@ phases:
       - echo Validating Format...
       - npm run prettier
       - aws cloudformation validate-template --template-body file://$CLOUDFORMATION_FILE
+      - echo Validating Cloudformation status
+      - >
+        status="$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION --query "Stacks[0].StackStatus")"
+        echo $status
   build:
     commands:
       - echo Building...
