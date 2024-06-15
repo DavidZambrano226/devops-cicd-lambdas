@@ -37,6 +37,16 @@ phases:
 
         echo "OpenAPI definition generated successfully."
       - cat api-docs.json
+      - Validating Clouformation Status
+      - STACK_STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION --query "Stacks[0].StackStatus" --output text)
+      - >
+        if [[ "$STACK_STATUS" == "ROLLBACK_COMPLETE" ]]; then
+          echo "Stack $STACK_NAME is in ROLLBACK_COMPLETE state. Deleting the stack.";
+          aws cloudformation delete-stack --stack-name $STACK_NAME --region $REGION;
+          echo "Waiting for CloudFormation stack $STACK_NAME to be deleted...";
+          aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME --region $REGION;
+          echo "CloudFormation stack $STACK_NAME deleted successfully.";
+        fi
   build:
     commands:
       - echo Building...
