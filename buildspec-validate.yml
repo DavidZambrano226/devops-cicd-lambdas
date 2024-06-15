@@ -4,6 +4,7 @@ env:
   variables:
     FUNCTION_NAME: "hello-lambdas"
     AWS_REGION: "us-east-1"
+    CLOUDFORMATION_FILE: "cloudformation.yml"
 
 phases:
   install:
@@ -20,6 +21,7 @@ phases:
       - npm run lint
       - echo Validating Format...
       - npm run prettier
+      - aws cloudformation validate-template --template-body file://$CLOUDFORMATION_FILE
   build:
     commands:
       - echo Building...

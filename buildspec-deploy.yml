@@ -62,7 +62,7 @@ phases:
           echo "Table $DYNAMO_TABLE_NAME exists in region $AWS_REGION.";
         else
           echo "Table $DYNAMO_TABLE_NAME does not exist in region $AWS_REGION. Creating CloudFormation stack $STACK_NAME.";
-          aws cloudformation create-stack --stack-name $STACK_NAME --template-body fileb://$CLOUDFORMATION_FILE --region $AWS_REGION --capabilities CAPABILITY_NAMED_IAM
+          aws cloudformation create-stack --stack-name $STACK_NAME --template-body file://$CLOUDFORMATION_FILE --region $AWS_REGION --capabilities CAPABILITY_NAMED_IAM
           echo "Waiting for CloudFormation stack $STACK_NAME to be created...";
           aws cloudformation wait stack-create-complete --stack-name $STACK_NAME --region $AWS_REGION;
           echo "CloudFormation stack $STACK_NAME created successfully.";
